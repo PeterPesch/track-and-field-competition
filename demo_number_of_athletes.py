@@ -22,7 +22,7 @@ def main():
     print('Schedule Name:', parser.name)
     print('Schedule Title:', parser.title)
     (header, details) = parser.get_table('chronoloogtabel')
-    for row in header:
+    for row in header.rows:
         print(row.string, row.link)
     for row in details:
         print(row.string, row.link)

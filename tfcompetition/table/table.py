@@ -39,7 +39,9 @@ class Row(object):
     @property
     def link(self):
         """Return the href from the row."""
-        return self._cells[-1].link
+        if len(self._cells) > 0:
+            return self._cells[-1].link
+        return ''
 
 
 class HeaderRow(Row):
@@ -51,7 +53,17 @@ class HeaderRow(Row):
 
 
 class Header(object):
-    pass
+    """Implement a table header."""
+    def __init__(self, tag):
+        """Initialise the object."""
+        self._tag = tag
+        self._rows = [HeaderRow(tr) for tr in tag.find_all('tr')]
+        # self._rows = None
+
+    @property
+    def rows(self):
+        """Return the rows of the header."""
+        return self._rows
 
 
 class Details(object):
