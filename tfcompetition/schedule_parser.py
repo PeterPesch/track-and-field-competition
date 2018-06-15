@@ -6,7 +6,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 from .utils import tag_has_class, string_from_tag
-from .table.table import Header, Body
+from .table.table import Table
 
 
 class ScheduleParser(object):
@@ -81,8 +81,4 @@ class ScheduleParser(object):
                 break
         if not found:
             raise IndexError('Did not find {} table.'.format(table_name))
-        # Compose table header as Header object
-        header = Header(found.thead)
-        # Compose table body as Body object.
-        body = Body(found.tbody)
-        return (header, body)
+        return Table(found)

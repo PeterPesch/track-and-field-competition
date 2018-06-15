@@ -43,6 +43,11 @@ class Row(object):
             return self._cells[-1].link
         return ''
 
+    def print(self):
+        """Print the object."""
+        for row in self.rows:
+            print(row.string, row.link)
+
 
 class HeaderRow(Row):
     """Implement a table row."""
@@ -64,6 +69,11 @@ class Header(object):
         """Return the rows of the header."""
         return self._rows
 
+    def print(self):
+        """Print the object."""
+        for row in self.rows:
+            row.print()
+
 
 class Body(object):
     """Implement Table body."""
@@ -77,6 +87,31 @@ class Body(object):
         """Return the rows of the table body."""
         return self._rows
 
+    def print(self):
+        """Print the object."""
+        for row in self.rows:
+            row.print()
+
 
 class Table(object):
-    pass
+    """Implement Table body."""
+    def __init__(self, tag):
+        """Initialise the object."""
+        self._tag = tag
+        self._header = Header(tag.thead)
+        self._body = Body(tag.tbody)
+
+    @property
+    def header(self):
+        """Return the header of the table."""
+        return self._header
+
+    @property
+    def body(self):
+        """Return the body of the table."""
+        return self._body
+
+    def print(self):
+        """Print the object."""
+        self.header.print()
+        self.body.print()
