@@ -21,10 +21,10 @@ def main():
     parser = ScheduleParser(competition.schedule_url)
     print('Schedule Name:', parser.name)
     print('Schedule Title:', parser.title)
-    (header, details) = parser.get_table('chronoloogtabel')
+    (header, body) = parser.get_table('chronoloogtabel')
     for row in header.rows:
-        print(row.string, row.link)
-    for row in details:
+        print(row.string)
+    for row in body.rows:
         print(row.string, row.link)
 
 

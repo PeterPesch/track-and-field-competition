@@ -58,7 +58,6 @@ class Header(object):
         """Initialise the object."""
         self._tag = tag
         self._rows = [HeaderRow(tr) for tr in tag.find_all('tr')]
-        # self._rows = None
 
     @property
     def rows(self):
@@ -66,8 +65,17 @@ class Header(object):
         return self._rows
 
 
-class Details(object):
-    pass
+class Body(object):
+    """Implement Table body."""
+    def __init__(self, tag):
+        """Initialise the object."""
+        self._tag = tag
+        self._rows = [Row(tr) for tr in tag.find_all('tr')]
+
+    @property
+    def rows(self):
+        """Return the rows of the table body."""
+        return self._rows
 
 
 class Table(object):

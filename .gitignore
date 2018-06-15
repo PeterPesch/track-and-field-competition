@@ -2,7 +2,7 @@
 *.pyc
 
 # Ignore the venv folder
-venv_tfc/
+venv*/
 
 # Ignore the scrap file kladje.py
 kladje.py
