@@ -11,7 +11,7 @@ In this project, I'm trying to make the software reusable.
 
 > Number of Athletes
 
-The first workaround I want to (re)create is a small tool which quickly shows me the number of athletes for each field event. I can use that information to make an educated guess of the time needed for that event. (For thack events, the time needed usually depends on the number of series rather than the number of athletes.)
+The first workaround I want to (re)create is a small tool which quickly shows me the number of athletes for each field event. I can use that information to make an educated guess of the time needed for that event. (For track events, the time needed usually depends on the number of series rather than the number of athletes.)
 
 ## Installing / Getting started
 
