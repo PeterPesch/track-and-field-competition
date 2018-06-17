@@ -2,8 +2,8 @@
 
 
 from tfcompetition.competition_selector import CompetitionSelector
-from tfcompetition.schedule.schedule_parser import ScheduleParser
 from tfcompetition.tfcompetition import TFCompetition
+from tfcompetition.schedule_parser import ScheduleParser
 
 
 def main():
@@ -30,8 +30,6 @@ def main():
         print(row.string)
     for row in table.body.rows:
         print(row.string, row.link)
-    schedule = parser.get_schedule()
-    print(schedule._colnames)
 
 
 if __name__ == '__main__':
