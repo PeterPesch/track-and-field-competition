@@ -30,7 +30,7 @@ class Parser(object):
                 if 'alert alert-error' in html_doc:
                     raise ValueError('No valid page!')
             except ValueError as e:
-                print('Error while getting HTML Tree: {}'.format(e.args[0]))
+                # print('Error while getting HTML Tree: {}'.format(e.args[0]))
                 self._tree = None
         return self._tree
 

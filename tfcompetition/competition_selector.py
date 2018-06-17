@@ -21,10 +21,10 @@ class CompetitionSelector(object):
         if initialise:
             self.select()
 
-    def select(self):
+    def select(self, prompt='Paste a link to the competition'):
         """Let the user select a competition."""
         # self.competition = 17
-        answer = input("Paste a link to the competition: ")
+        answer = input('{}: '.format(prompt))
         if answer:
             # User provided an answer.
             found = search(r"(\d+)", answer)

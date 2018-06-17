@@ -6,3 +6,6 @@ venv*/
 
 # Ignore the scrap file kladje.py
 kladje.py
+
+# Ignore examples worksheet
+*Voorbeelden.xlsx
