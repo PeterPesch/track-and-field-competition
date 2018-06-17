@@ -1,6 +1,9 @@
 # Ignore all compiled python modules.
 *.pyc
 
+# Ignore all sqlite databases.
+*.db
+
 # Ignore the venv folder
 venv*/
 

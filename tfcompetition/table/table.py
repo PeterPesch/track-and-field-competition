@@ -43,6 +43,11 @@ class Row(object):
             return self._cells[-1].link
         return ''
 
+    @property
+    def cells(self):
+        """Return the cells of the row."""
+        return self._cells
+
     def print(self):
         """Print the object."""
         for row in self.rows:
