@@ -103,8 +103,12 @@ class Table(object):
     def __init__(self, tag):
         """Initialise the object."""
         self._tag = tag
-        self._header = Header(tag.thead)
-        self._body = Body(tag.tbody)
+        if tag:
+            self._header = Header(tag.thead)
+            self._body = Body(tag.tbody)
+        else:
+            self._header = None
+            self._body = None
 
     @property
     def header(self):
