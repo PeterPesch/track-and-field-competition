@@ -29,10 +29,18 @@ class Parser(object):
                 # Check if competition exists
                 if 'alert alert-error' in html_doc:
                     raise ValueError('No valid page!')
-            except ValueError:
-                print('Error while getting HTML Tree!')
+            except ValueError as e:
+                print('Error while getting HTML Tree: {}'.format(e.args[0]))
                 self._tree = None
         return self._tree
+
+    @property
+    def title(self):
+        """Return the Title of the page."""
+        if self.tree:
+            return self.tree.title.string
+        else:
+            return ''
 
     @property
     def name(self):
@@ -43,14 +51,5 @@ class Parser(object):
             for c in primary_content.h4.contents:
                 result += c.string
         except AttributeError:
-            print('Error while getting page name')
-            result = None
+            result = self.title
         return result
-
-    @property
-    def title(self):
-        """Return the Title of the page."""
-        if self.tree:
-            return self.tree.title.string
-        else:
-            return ''

@@ -20,7 +20,7 @@ class ScheduleParser(Parser):
     def get_table(self, table_name):
         """Return the first table with given name with a proper header row."""
         if not self.tree:
-            raise ValueError(
+            raise IndexError(
                 'Error while finding {} table.'.format(table_name))
         # Find the table
         found = None

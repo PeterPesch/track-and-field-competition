@@ -21,7 +21,11 @@ def main():
     parser = ScheduleParser(competition.schedule_url)
     print('Schedule Name:', parser.name)
     print('Schedule Title:', parser.title)
-    table = parser.get_table('chronoloogtabel')
+    try:
+        table = parser.get_table('chronoloogtabel')
+    except IndexError as e:
+        print(e.args[0])
+        return
     for row in table.header.rows:
         print(row.string)
     for row in table.body.rows:
