@@ -22,7 +22,7 @@ def main():
     print('Schedule Name:', parser.name)
     print('Schedule Title:', parser.title)
     try:
-        table = parser.get_table('chronoloogtabel')
+        table = parser.get_table()
     except IndexError as e:
         print(e.args[0])
         return

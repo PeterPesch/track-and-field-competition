@@ -1,7 +1,7 @@
 """Objects which implement a table."""
 
 
-from ..utils import tag_has_class, string_from_tag
+from ..utils import string_from_tag
 
 
 class Cell(object):

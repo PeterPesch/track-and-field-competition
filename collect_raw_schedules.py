@@ -55,7 +55,7 @@ def main():
         def row_generator():
             table = None
             try:
-                table = parser.get_table('chronoloogtabel')
+                table = parser.get_table()
             except IndexError:
                 return
             for row in table.body.rows:
