@@ -3,7 +3,7 @@
 
 from tfcompetition.competition_selector import CompetitionSelector
 from tfcompetition.tfcompetition import TFCompetition
-from tfcompetition.schedule_parser import ScheduleParser
+from tfcompetition.schedule.schedule_parser import ScheduleParser
 
 
 def main():
@@ -26,25 +26,9 @@ def main():
     except IndexError as e:
         print(e.args[0])
         return
-<<<<<<< HEAD
-    for row in table.header.rows:
-        print(row.string)
-    for row in table.body.rows:
-        print(row.string, row.link)
-=======
-    # for row in table.header.rows:
-    #     print(row.string)
-    # for row in table.body.rows:
-    #     print(row.string, row.link)
     print('==========================')
     schedule = parser.get_schedule()
-    print(schedule._colnames)
-    for row in schedule._rows:
-        print(row)
-    print(set(schedule._col3))
-    print('==========================')
     schedule.print()
->>>>>>> feature-schedule
 
 
 if __name__ == '__main__':

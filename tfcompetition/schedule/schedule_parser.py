@@ -5,10 +5,10 @@ import urllib.request
 
 from bs4 import BeautifulSoup
 
-from .parser.parser import Parser
-from .table.table import Table
-from .utils import string_from_tag, tag_has_class
-
+from .schedule import Schedule
+from ..parser.parser import Parser
+from ..table.table import Table
+from ..utils import string_from_tag, tag_has_class
 
 class ScheduleParser(Parser):
     """Parse a 'Tijdchema' page on atletiek.nu."""
@@ -41,3 +41,7 @@ class ScheduleParser(Parser):
         if not found:
             raise IndexError('Did not find {} table.'.format(table_name))
         return Table(found)
+
+    def get_schedule(self):
+        """Return the schedule."""
+        return Schedule(self.get_table('chronoloogtabel'))
