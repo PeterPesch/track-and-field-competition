@@ -36,7 +36,7 @@ class Schedule(object):
             header_row = table.header.rows[0].cells
             for i in range(len(header_row)):
                 if header_row[i].string:
-                    celname = header_row[i].string
+                    celname = header_row[i].string.strip()
                 else:
                     celname = 'column_{}'.format(i)
                 self._colnames.append(celname)
@@ -49,7 +49,7 @@ class Schedule(object):
                 if len(row.cells) < 4:
                     raise ValueError('No valid Time Schedule!')
                 self._rows.append(
-                    [(cel.string, cel.link) for cel in row.cells])
+                    [(cel.string.strip(), cel.link) for cel in row.cells])
         # Examine column 3: Results or Startlist.
         self._col3 = [row[3][0] for row in self._rows]
         for cel in self._col3:
@@ -68,9 +68,6 @@ class Schedule(object):
             if cur_cat not in sg:
                 cur_cat = sg
             startgroupdict[sg] = cur_cat
-        # for row in self._rows:
-        #     row[4] = startgroupdict[row[1][0]]
-        # Create the schedule items
         self.items = []
         for row in self._rows:
             self.items.append(Item(
@@ -84,6 +81,6 @@ class Schedule(object):
 
     def print(self):
         """Print the Time Schedule."""
-        print('Tijd - Onderdeel - Categorie/Startgroep')
+        print('Tijd: Onderdeel - Categorie/Startgroep')
         for item in self.items:
             item.print()
