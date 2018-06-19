@@ -5,7 +5,7 @@ import sqlite3
 
 from tfcompetition.competition_selector import CompetitionSelector
 from tfcompetition.tfcompetition import TFCompetition
-from tfcompetition.schedule_parser import ScheduleParser
+from tfcompetition.schedule.schedule_parser import ScheduleParser
 
 
 def main():
