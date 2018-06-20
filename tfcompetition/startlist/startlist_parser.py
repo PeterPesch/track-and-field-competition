@@ -7,13 +7,12 @@ from ..table.table import Table
 from ..utils import find_table
 
 
-class ScheduleParser(Parser):
+class StartlistParser(Parser):
     """
-    Parse a 'Tijdschema' page on atletiek.nu.
+    Parse a 'Startlijst' page on atletiek.nu.
 
     The page shows one main table.
-    The main table is one of the tables which have class 'chronoloogtabel',
-    and can be identified because its header cells have class 'header'.
+    The main table is one of the tables which have class 'deelnemerstabel'.
     """
 
     def __init__(self, schedule_url):
@@ -23,7 +22,7 @@ class ScheduleParser(Parser):
     def get_table(self):
         """Return the first table with given name with a proper header row."""
         return Table(find_table(self.tree,
-                                classname='deelnemerstabel ',
+                                classname='deelnemerstabel',
                                 headerclass=None))
 
     def get_startlist(self):

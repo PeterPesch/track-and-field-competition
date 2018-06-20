@@ -4,6 +4,7 @@
 from tfcompetition.competition_selector import CompetitionSelector
 from tfcompetition.tfcompetition import TFCompetition
 from tfcompetition.schedule.schedule_parser import ScheduleParser
+from tfcompetition.startlist.startlist_parser import StartlistParser
 
 
 def main():
@@ -41,15 +42,19 @@ def main():
         print('No startlist found!')
         return
     print('Startlist page: {}'.format(found))
-    parser = ScheduleParser(found)
+    parser = StartlistParser(found)
     print('Startlijst Name:', parser.name)
     print('Startlijst Title:', parser.title)
     try:
         table = parser.get_table()
-        print('Found the deelnemrstabel!')
+        print('Found the deelnemerstabel!')
     except IndexError as e:
         print(e.args[0])
+        # print(parser.tree)
         return
+    for row in table._tag.tbody.find_all('tr'):
+        print('.', end='')
+        print
 
 
 if __name__ == '__main__':

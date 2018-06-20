@@ -1,6 +1,6 @@
 """Objects which implement a track&field startlist."""
 
 
-def StartList(object):
+def Startlist(object):
     """Implement a track%field startlist."""
     pass
