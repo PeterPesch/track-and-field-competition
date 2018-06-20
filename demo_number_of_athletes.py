@@ -29,6 +29,27 @@ def main():
     print('==========================')
     schedule = parser.get_schedule()
     schedule.print()
+    # Try to find a link to a startlist.
+    print('==========================')
+    found = None
+    for item in schedule.items:
+        if 'startlijst' in item._link:
+            item.print()
+            found = item._link
+            break
+    if not found:
+        print('No startlist found!')
+        return
+    print('Startlist page: {}'.format(found))
+    parser = ScheduleParser(found)
+    print('Startlijst Name:', parser.name)
+    print('Startlijst Title:', parser.title)
+    try:
+        table = parser.get_table()
+        print('Found the deelnemrstabel!')
+    except IndexError as e:
+        print(e.args[0])
+        return
 
 
 if __name__ == '__main__':

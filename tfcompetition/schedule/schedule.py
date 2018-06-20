@@ -76,7 +76,7 @@ class Schedule(object):
                 category=startgroupdict[row[1][0]],
                 startgroup=row[1][0],
                 type=self._colnames[3],
-                link=row[3][0]
+                link=row[3][1]
             ))
 
     def print(self):
