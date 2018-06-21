@@ -20,6 +20,13 @@ def string_from_tag(tag):
     return total[:-1]
 
 
+def first_string_from_tag(tag):
+    """Get the first string representation from the tag."""
+    for s in tag.stripped_strings:
+        return s
+    return ''
+
+
 def find_table(tree, classname=None, headerclass=None):
     """Return tag from the first table which compies to the conditions."""
     if not tree:

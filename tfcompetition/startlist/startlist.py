@@ -1,20 +1,25 @@
 """Objects which implement a track&field startlist."""
 
 
-def Athlete(object):
+class Athlete(object):
     """Implement an Athlete line within a startlist."""
-    def init(self, name, order=None, bib=None,
-             club=None, team=None, category=None):
+    def __init__(self, **kwargs):
         """Initialise the object."""
-        self.name = name
-        self.order = order
-        self.bib = bib
-        self.club = club
-        self.team = team
-        self.category = category
+        self.name = kwargs.pop('name', None)
+        self.order = kwargs.pop('order', None)
+        self.bib = kwargs.pop('bib', None)
+        self.club = kwargs.pop('club', None)
+        self.team = kwargs.pop('team', None)
+        self.category = kwargs.pop('category', None)
+
+    def __str__(self):
+        """Return the athlete line as a string."""
+        values = [self.order, self.bib, self.name,
+                  self.club, self.team, self.category]
+        return ', '.join([x for x in values if x is not None])
 
 
-def Startlist(object):
+class Startlist(object):
     """Implement a track%field startlist."""
     def __init__(self, table):
         """Initialise the object."""
@@ -23,7 +28,7 @@ def Startlist(object):
         # raw header
         if (table and table.header and
                 table.header.rows and
-                len(table.header.rows[0].cells) > 30):
+                len(table.header.rows[0].cells) > 0):
             header_row = table.header.rows[0].cells
             for i in range(len(header_row)):
                 if header_row[i].string:
@@ -41,7 +46,7 @@ def Startlist(object):
         col_team = -1
         col_cat = -1
         for col in range(len(header_row)):
-            hdr = header_row[col].strip()
+            hdr = header_row[col].string.strip()
             if hdr == 'Startvolgorde':
                 col_order = col
             elif hdr == 'Snr':
@@ -62,5 +67,25 @@ def Startlist(object):
                     raise ValueError('No valid Startlist!')
                 self._rows.append(
                     [(cel.string.strip(), cel.link) for cel in row.cells])
+        else:
+            return
         # create line objects
-        raise NotImplementedError
+        self._athletes = []
+        max_col = max(col_order, col_bib, col_name,
+                      col_club, col_team, col_cat)
+        for row in table.body.rows:
+            if len(row.cells) >= max_col:
+                values = dict()
+                if col_order > -1:
+                    values['order'] = row.cells[col_order].string
+                if col_bib > -1:
+                    values['bib'] = row.cells[col_bib].string
+                if col_name > -1:
+                    values['name'] = row.cells[col_name].string
+                if col_club > -1:
+                    values['club'] = row.cells[col_club].string
+                if col_team > -1:
+                    values['team'] = row.cells[col_team].string
+                if col_cat > -1:
+                    values['category'] = row.cells[col_cat].string
+                self._athletes.append(Athlete(**values))

@@ -27,5 +27,4 @@ class StartlistParser(Parser):
 
     def get_startlist(self):
         """Return the startlist."""
-        raise NotImplementedError
-        # return Startlist(self.get_table())
+        return Startlist(self.get_table())

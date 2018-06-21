@@ -1,7 +1,7 @@
 """Objects which implement a table."""
 
 
-from ..utils import string_from_tag
+from ..utils import first_string_from_tag
 
 
 class Cell(object):
@@ -13,7 +13,7 @@ class Cell(object):
     @property
     def string(self):
         """Return the contents of the cell as a string."""
-        return string_from_tag(self._tag)
+        return first_string_from_tag(self._tag)
 
     @property
     def link(self):

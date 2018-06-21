@@ -6,6 +6,8 @@ from tfcompetition.tfcompetition import TFCompetition
 from tfcompetition.schedule.schedule_parser import ScheduleParser
 from tfcompetition.startlist.startlist_parser import StartlistParser
 
+#from tfcompetition.startlist.startlist import Startlist
+
 
 def main():
     """Perform the demonstration."""
@@ -55,7 +57,11 @@ def main():
     table.header.print()
     for row in table._tag.tbody.find_all('tr'):
         print('.', end='')
-        print
+    print()
+    startlist = parser.get_startlist()
+    print('--------------')
+    for athlete in startlist._athletes:
+        print(athlete.__str__())
 
 
 if __name__ == '__main__':
