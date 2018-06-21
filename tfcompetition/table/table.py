@@ -50,8 +50,7 @@ class Row(object):
 
     def print(self):
         """Print the object."""
-        for row in self.rows:
-            print(row.string, row.link)
+        print(self.string, self.link)
 
 
 class HeaderRow(Row):

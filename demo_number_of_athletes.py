@@ -52,6 +52,7 @@ def main():
         print(e.args[0])
         # print(parser.tree)
         return
+    table.header.print()
     for row in table._tag.tbody.find_all('tr'):
         print('.', end='')
         print
