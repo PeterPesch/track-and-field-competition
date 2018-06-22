@@ -83,13 +83,18 @@ def get_event(event):
 
 def eventsort_key(eventname):
     """Return a sorting key which makes sense in Track and Field."""
+    empty = '        '
     def is_relay_event(event):
+        event = event.strip().lower()
         if '4x' in event:
+            return True
+        if 'zweedse' in event:
             return True
         return False
 
     def is_running_event(event):
-        if re.match(r"\d", event.strip()):
+        event = event.strip().lower()
+        if re.match(r"\d", event):
             return True
         return False
 
@@ -122,13 +127,24 @@ def eventsort_key(eventname):
         return False
 
     def relay_key(event):
-        return event.lower()
+        event = event.strip().lower()
+        m = re.search(r"x(\d+)", event)
+        if m:
+            distance = (empty + m.group(1))[-8:]
+        else:
+            distance = empty[-8:]
+        return distance + event
 
     def run_key(event):
-        if 'H' in event:
-            return '2' + event.strip().lower()
+        m = re.search(r"\d+", event)
+        if m:
+            distance = (empty + m.group(0))[-8:]
         else:
-            return '4' + event.strip().lower()
+            distance = empty[-8:]
+        if 'H' in event:
+            return '2' + distance + event.strip().lower()
+        else:
+            return '4' + distance + event.strip().lower()
 
     def jump_key(event):
         return event.lower()
