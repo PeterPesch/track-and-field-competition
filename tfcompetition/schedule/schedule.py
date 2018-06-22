@@ -19,7 +19,7 @@ class Item(object):
 
     def print(self):
         """Print the schedule item."""
-        print('{}: {} - {}/{}'.format(
+        print('{}: {} - {} / {}'.format(
             self.time, self.event, self.category, self.startgroup))
 
 
@@ -49,7 +49,9 @@ class Schedule(object):
                 if len(row.cells) < 4:
                     raise ValueError('No valid Time Schedule!')
                 self._rows.append(
-                    [(cel.string.strip(), cel.link) for cel in row.cells])
+                    [(cel.string.strip(), cel.link,
+                      cel.combined_string.strip())
+                        for cel in row.cells])
         # Examine column 3: Results or Startlist.
         self._col3 = [row[3][0] for row in self._rows]
         for cel in self._col3:
@@ -72,7 +74,7 @@ class Schedule(object):
         for row in self._rows:
             self.items.append(Item(
                 time=row[0][0],
-                event=row[2][0],
+                event=row[2][2],
                 category=startgroupdict[row[1][0]],
                 startgroup=row[1][0],
                 type=self._colnames[3],

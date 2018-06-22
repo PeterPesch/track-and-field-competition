@@ -1,7 +1,7 @@
 """Objects which implement a table."""
 
 
-from ..utils import first_string_from_tag
+from ..utils import combined_string_from_tag, first_string_from_tag
 
 
 class Cell(object):
@@ -14,6 +14,11 @@ class Cell(object):
     def string(self):
         """Return the contents of the cell as a string."""
         return first_string_from_tag(self._tag)
+
+    @property
+    def combined_string(self):
+        """Return the contents of the cell as a string."""
+        return combined_string_from_tag(self._tag)
 
     @property
     def link(self):

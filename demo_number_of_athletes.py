@@ -5,6 +5,7 @@ from tfcompetition.competition_selector import CompetitionSelector
 from tfcompetition.tfcompetition import TFCompetition
 from tfcompetition.schedule.schedule_parser import ScheduleParser
 from tfcompetition.startlist.startlist_parser import StartlistParser
+from tfcompetition.utils import eventsort_key, get_event
 
 #from tfcompetition.startlist.startlist import Startlist
 
@@ -32,6 +33,11 @@ def main():
     print('==========================')
     schedule = parser.get_schedule()
     schedule.print()
+    # Show the types of event
+    print('==========================')
+    events = [get_event(item.event) for item in schedule.items]
+    for event in sorted(set(events), key=eventsort_key):
+        print(event)
     # Try to find a link to a startlist.
     print('==========================')
     found = None
