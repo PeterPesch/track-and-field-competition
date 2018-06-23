@@ -1,21 +1,54 @@
 """Objects which implement a track&field startlist."""
 
 
-class Athlete(object):
+class Line(object):
+    """Implement an Line within a startlist."""
+    def __init__(self, **kwargs):
+        """Initialise the object."""
+        raise NotImplementedError
+    def __str__(self):
+        """Return the heat line as a string."""
+        values = []
+        return ', '.join([x for x in values if x is not None])
+
+
+class Athlete(Line):
     """Implement an Athlete line within a startlist."""
     def __init__(self, **kwargs):
         """Initialise the object."""
-        self.name = kwargs.pop('name', None)
         self.order = kwargs.pop('order', None)
+        self.lane = kwargs.pop('lane', None)
         self.bib = kwargs.pop('bib', None)
+        self.name = kwargs.pop('name', None)
         self.club = kwargs.pop('club', None)
         self.team = kwargs.pop('team', None)
         self.category = kwargs.pop('category', None)
-
     def __str__(self):
         """Return the athlete line as a string."""
-        values = [self.order, self.bib, self.name,
+        values = [self.order, self.lane, self.bib, self.name,
                   self.club, self.team, self.category]
+        return ', '.join([x for x in values if x is not None])
+
+
+class EmptyLane(Line):
+    """Implement an Empty lane within a startlist."""
+    def __init__(self, **kwargs):
+        """Initialise the object."""
+        self.lane = kwargs.pop('lane', None)
+    def __str__(self):
+        """Return the athlete line as a string."""
+        values = [self.lane, 'Leeg']
+        return ', '.join([x for x in values if x is not None])
+
+
+class Heat(Line):
+    """Implement an Heat line within a startlist."""
+    def __init__(self, **kwargs):
+        """Initialise the object."""
+        self.heat = kwargs.pop('heat', None)
+    def __str__(self):
+        """Return the heat line as a string."""
+        values = [self.heat]
         return ', '.join([x for x in values if x is not None])
 
 
@@ -39,6 +72,7 @@ class Startlist(object):
         else:
             raise ValueError('No valid Startlist!')
         # identify columns
+        col_lane = -1
         col_name = -1
         col_order = -1
         col_bib = -1
@@ -49,6 +83,8 @@ class Startlist(object):
             hdr = header_row[col].string.strip()
             if hdr == 'Startvolgorde':
                 col_order = col
+            elif hdr == 'Baan':
+                col_lane = col
             elif hdr == 'Snr':
                 col_bib = col
             elif hdr == 'Naam':
@@ -70,7 +106,7 @@ class Startlist(object):
         else:
             return
         # create line objects
-        self._athletes = []
+        self._lines = []
         max_col = max(col_order, col_bib, col_name,
                       col_club, col_team, col_cat)
         for row in table.body.rows:
@@ -78,6 +114,8 @@ class Startlist(object):
                 values = dict()
                 if col_order > -1:
                     values['order'] = row.cells[col_order].string
+                if col_lane > -1:
+                    values['lane'] = row.cells[col_lane].string
                 if col_bib > -1:
                     values['bib'] = row.cells[col_bib].string
                 if col_name > -1:
@@ -88,4 +126,13 @@ class Startlist(object):
                     values['team'] = row.cells[col_team].string
                 if col_cat > -1:
                     values['category'] = row.cells[col_cat].string
-                self._athletes.append(Athlete(**values))
+                # Check for empty lane
+                if values['name'].replace('-', '').strip() == '':
+                    self._lines.append(EmptyLane(**values))
+                else:
+                    self._lines.append(Athlete(**values))
+            elif len(row.cells) == 1:
+                values = dict()
+                if col_lane > -1:
+                    values['heat'] = row.cells[col_lane].string
+                self._lines.append(Heat(**values))

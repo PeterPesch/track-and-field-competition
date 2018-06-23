@@ -66,8 +66,8 @@ def main():
     print()
     startlist = parser.get_startlist()
     print('--------------')
-    for athlete in startlist._athletes:
-        print(athlete.__str__())
+    for line in startlist._lines:
+        print(line)
 
 
 if __name__ == '__main__':
