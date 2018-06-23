@@ -3,6 +3,16 @@
 import re
 
 
+def int_from_prompt(prompt):
+    """Return integer as answer to a prompt."""
+    raw_answer = input(prompt)
+    m = re.search(r"\d+", raw_answer)
+    if m:
+        return int(m.group(0))
+    else:
+        return -1
+
+
 def tag_has_class(tag, cls):
     """Check whether tag has class cls."""
     classlist = tag.get('class')
@@ -81,50 +91,61 @@ def get_event(event):
     return event.split()[0]
 
 
+def is_relay_event(event):
+    """Return True if event is a relay event."""
+    event = event.strip().lower()
+    if '4x' in event:
+        return True
+    if 'zweedse' in event:
+        return True
+    return False
+
+
+def is_running_event(event):
+    """Return True if event is a running event."""
+    event = event.strip().lower()
+    if re.match(r"\d", event):
+        return True
+    return False
+
+
+def is_jumping_event(event):
+    """Return True if event is a jumping event."""
+    event = event.strip().lower()
+    if 'ver' in event:
+        return True
+    if 'hoog' in event:
+        return True
+    if 'pols' in event:
+        return True
+    if 'hink' in event or 'hss' in event:
+        return True
+    return False
+
+
+def is_throwing_event(event):
+    """Return True if event is a throwing event."""
+    event = event.strip().lower()
+    if 'kogel' in event:
+        return True
+    if 'speer' in event:
+        return True
+    if 'discus' in event:
+        return True
+    if 'hamer' in event:
+        return True
+    if 'slinger' in event:
+        return True
+    if 'gewicht' in event:
+        return True
+    if 'bal' in event:
+        return True
+    return False
+
+
 def eventsort_key(eventname):
     """Return a sorting key which makes sense in Track and Field."""
     empty = '        '
-    def is_relay_event(event):
-        event = event.strip().lower()
-        if '4x' in event:
-            return True
-        if 'zweedse' in event:
-            return True
-        return False
-
-    def is_running_event(event):
-        event = event.strip().lower()
-        if re.match(r"\d", event):
-            return True
-        return False
-
-    def is_jumping_event(event):
-        event = event.strip().lower()
-        if 'ver' in event:
-            return True
-        if 'hoog' in event:
-            return True
-        if 'pols' in event:
-            return True
-        if 'hink' in event or 'hss' in event:
-            return True
-        return False
-
-    def is_throwing_event(event):
-        event = event.strip().lower()
-        if 'kogel' in event:
-            return True
-        if 'speer' in event:
-            return True
-        if 'discus' in event:
-            return True
-        if 'hamer' in event:
-            return True
-        if 'slinger' in event:
-            return True
-        if 'gewicht' in event:
-            return True
-        return False
 
     def relay_key(event):
         event = event.strip().lower()

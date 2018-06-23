@@ -6,6 +6,7 @@ class Line(object):
     def __init__(self, **kwargs):
         """Initialise the object."""
         raise NotImplementedError
+
     def __str__(self):
         """Return the heat line as a string."""
         values = []
@@ -23,6 +24,7 @@ class Athlete(Line):
         self.club = kwargs.pop('club', None)
         self.team = kwargs.pop('team', None)
         self.category = kwargs.pop('category', None)
+
     def __str__(self):
         """Return the athlete line as a string."""
         values = [self.order, self.lane, self.bib, self.name,
@@ -35,6 +37,7 @@ class EmptyLane(Line):
     def __init__(self, **kwargs):
         """Initialise the object."""
         self.lane = kwargs.pop('lane', None)
+
     def __str__(self):
         """Return the athlete line as a string."""
         values = [self.lane, 'Leeg']
@@ -46,6 +49,7 @@ class Heat(Line):
     def __init__(self, **kwargs):
         """Initialise the object."""
         self.heat = kwargs.pop('heat', None)
+
     def __str__(self):
         """Return the heat line as a string."""
         values = [self.heat]
