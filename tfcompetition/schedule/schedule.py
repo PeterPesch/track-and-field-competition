@@ -17,10 +17,14 @@ class Item(object):
         """Return the event of the schedule item."""
         return self._event
 
+    def __str__(self):
+        """Return a string representation of the schedule item."""
+        return '{}: {} - {} / {}'.format(
+            self.time, self.event, self.category, self.startgroup)
+
     def print(self):
         """Print the schedule item."""
-        print('{}: {} - {} / {}'.format(
-            self.time, self.event, self.category, self.startgroup))
+        print(str(self))
 
 
 class Schedule(object):

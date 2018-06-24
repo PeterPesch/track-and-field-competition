@@ -6,7 +6,8 @@ from tfcompetition.tfcompetition import TFCompetition
 from tfcompetition.schedule.schedule_parser import ScheduleParser
 from tfcompetition.startlist.startlist_parser import StartlistParser
 from tfcompetition.utils import eventsort_key, get_event, int_from_prompt, \
-        is_jumping_event, is_relay_event, is_running_event, is_throwing_event
+        is_jumping_event, is_relay_event, is_running_event, \
+        is_throwing_event, schedulesort_key
 
 #from tfcompetition.startlist.startlist import Startlist
 
@@ -55,7 +56,7 @@ def main():
             raise ValueError('Unknown event: "{}"'.format(event))
     # Let User choose a type of event.
     print('==========================')
-    print('Events found:')
+    print('Event Types found:')
     if found_relay:
         print('(1) Relay events')
     if found_run:
@@ -67,46 +68,83 @@ def main():
     choice = int_from_prompt('Choose Type of event: ')
     if choice == 1:
         print('Relays chosen!')
-        checker = is_relay_event
+        check_eventtype = is_relay_event
     elif choice == 2:
         print('Track events chosen!')
-        checker = is_running_event
+        check_eventtype = is_running_event
     elif choice == 3:
         print('Jump events chosen!')
-        checker = is_jumping_event
+        check_eventtype = is_jumping_event
     elif choice == 4:
         print('Throw events chosen!')
-        checker = is_throwing_event
+        check_eventtype = is_throwing_event
     else:
         print('Bye bye!')
         return
-    # Print the chosen events.
-    print('==========================')
-    #found = None
-    for item in schedule.items:
-        if not checker(item.event):
-            continue
-        if 'startlijst' in item._link:
-            print('---------------------------')
-            item.print()
-            print('Startlist page: {}'.format(item._link))
-            parser = StartlistParser(item._link)
-            print('Startlijst Name:', parser.name)
-            print('Startlijst Title:', parser.title)
-            try:
-                table = parser.get_table()
-            except IndexError as e:
-                print(e.args[0])
-                continue
+    # Create a sorted list of scheduled events of the chosen time
+    scheduled_events = sorted(
+        [item for item in schedule.items if check_eventtype(item.event)],
+        key = schedulesort_key)
+    # Let user choose an event
+    while True:
+        print('==========================')
+        print('Event Types found:')
+        for i in range(len(scheduled_events)):
+            item = scheduled_events[i]
+            print('({}) - {}'.format(i, str(item)))
+        choice = int_from_prompt('Choose Event: ')
+        if choice not in range(len(scheduled_events)):
+            print('No event chosen. Bye!')
+            break
+        # Print the chosen event.
+        print('---------------------------')
+        item = scheduled_events[choice]
+        item.print()
+        if 'startlijst' not in item._link:
+            print('No startlist available for this schedule item.')
+        # Print the startlist
+        print('Startlist page: {}'.format(item._link))
+        parser = StartlistParser(item._link)
+        print('Startlijst Name:', parser.name)
+        print('Startlijst Title:', parser.title)
+        try:
+            table = parser.get_table()
+        except IndexError as e:
+            print(e.args[0])
+        else:
             table.header.print()
             print()
             startlist = parser.get_startlist()
             print('--------------')
             for line in startlist._lines:
                 print(line)
-    #if not found:
-    #    print('No startlist found!')
-    #    return
+    # Print the chosen events.
+    #print('==========================')
+    ##found = None
+    #for item in schedule.items:
+    #    if not check_eventtype(item.event):
+    #        continue
+    #    if 'startlijst' in item._link:
+    #        print('---------------------------')
+    #        item.print()
+    #        print('Startlist page: {}'.format(item._link))
+    #        parser = StartlistParser(item._link)
+    #        print('Startlijst Name:', parser.name)
+    #        print('Startlijst Title:', parser.title)
+    #        try:
+    #            table = parser.get_table()
+    #        except IndexError as e:
+    #            print(e.args[0])
+    #            continue
+    #        table.header.print()
+    #        print()
+    #        startlist = parser.get_startlist()
+    #        print('--------------')
+    #        for line in startlist._lines:
+    #            print(line)
+    ##if not found:
+    ##    print('No startlist found!')
+    ##    return
 
 
 if __name__ == '__main__':
