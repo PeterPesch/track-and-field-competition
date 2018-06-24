@@ -65,6 +65,8 @@ class Startlist(object):
         self.name = name
         self.time = time
         self.location = location
+        self._athlete_count = None
+        self._heat_count = None
         # raw header
         if (table and table.header and
                 table.header.rows and
@@ -167,3 +169,38 @@ class Startlist(object):
         print('--------------')
         for line in self._lines:
             print(line)
+        print()
+        print(self.size)
+        print('--------------')
+
+    @property
+    def athlete_count(self):
+        """Count the number of athletes on this startlist."""
+        if not self._athlete_count:
+            count = 0
+            for line in self._lines:
+                if isinstance(line, Athlete):
+                    count += 1
+            self._athlete_count = count
+        return self._athlete_count
+
+    @property
+    def heat_count(self):
+        """Count the number of heates in this startlist."""
+        if not self._heat_count:
+            count = 0
+            for line in self._lines:
+                if isinstance(line, Heat):
+                    count += 1
+            self._heat_count = count
+        return self._heat_count
+
+    @property
+    def size(self):
+        """Returns a string which describes the size of this startist."""
+        if self.heat_count > 0:
+            return '{} heats'.format(self.heat_count)
+        elif self.athlete_count > 0:
+            return '{} athletes'.format(self.athlete_count)
+        else:
+            return 'Size unknown.'

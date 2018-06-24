@@ -4,7 +4,7 @@
 from .startlist import Startlist
 from ..parser.parser import Parser
 from ..table.table import Table
-from ..utils import find_table, string_from_tag
+from ..utils import find_table
 
 
 class StartlistParser(Parser):

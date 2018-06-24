@@ -197,6 +197,7 @@ def eventsort_key(eventname):
     else:
         return '0' + str(eventname).lower()
 
+
 def schedulesort_key(schedule_item):
     """Return a sorting key which makes sense in Track and Field."""
     return eventsort_key(schedule_item.event) + schedule_item.startgroup
