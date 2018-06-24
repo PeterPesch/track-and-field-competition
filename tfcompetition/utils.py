@@ -53,6 +53,17 @@ def combined_string_from_tag(tag):
         )
 
 
+def combined_content_from_tag(tag):
+    """Get the combined content from the tag."""
+    result = ''
+    try:
+        for c in tag.contents:
+            result += c
+    except AttributeError:
+        return None
+    return result
+
+
 def find_table(tree, classname=None, headerclass=None):
     """Return tag from the first table which compies to the conditions."""
     if not tree:
@@ -103,6 +114,8 @@ def is_relay_event(event):
 
 def is_running_event(event):
     """Return True if event is a running event."""
+    if is_relay_event(event):
+        return False
     event = event.strip().lower()
     if re.match(r"\d", event):
         return True

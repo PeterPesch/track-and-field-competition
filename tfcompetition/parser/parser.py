@@ -5,6 +5,8 @@ import urllib.request
 
 from bs4 import BeautifulSoup
 
+from ..utils import combined_content_from_tag
+
 
 class Parser(object):
     """Parse a page on atletiek.nu."""
@@ -45,11 +47,16 @@ class Parser(object):
     @property
     def name(self):
         """Return the Name of the page."""
-        result = ''
         try:
             primary_content = self.tree.find(id='primarycontent')
-            for c in primary_content.h4.contents:
-                result += c.string
+            if primary_content.find_all('h1'):
+                result = combined_content_from_tag(primary_content.h1)
+            elif primary_content.find_all('h2'):
+                result = combined_content_from_tag(primary_content.h2)
+            elif primary_content.find_all('h3'):
+                result = combined_content_from_tag(primary_content.h3)
+            elif primary_content.find_all('h4'):
+                result = combined_content_from_tag(primary_content.h4)
         except AttributeError:
             result = self.title
         return result

@@ -79,7 +79,7 @@ def main():
         print('Throw events chosen!')
         check_eventtype = is_throwing_event
     else:
-        print('Bye bye!')
+        print('No event type chosen. Bye!')
         return
     # Create a sorted list of scheduled events of the chosen time
     scheduled_events = sorted(
@@ -112,39 +112,8 @@ def main():
         except IndexError as e:
             print(e.args[0])
         else:
-            table.header.print()
-            print()
             startlist = parser.get_startlist()
-            print('--------------')
-            for line in startlist._lines:
-                print(line)
-    # Print the chosen events.
-    #print('==========================')
-    ##found = None
-    #for item in schedule.items:
-    #    if not check_eventtype(item.event):
-    #        continue
-    #    if 'startlijst' in item._link:
-    #        print('---------------------------')
-    #        item.print()
-    #        print('Startlist page: {}'.format(item._link))
-    #        parser = StartlistParser(item._link)
-    #        print('Startlijst Name:', parser.name)
-    #        print('Startlijst Title:', parser.title)
-    #        try:
-    #            table = parser.get_table()
-    #        except IndexError as e:
-    #            print(e.args[0])
-    #            continue
-    #        table.header.print()
-    #        print()
-    #        startlist = parser.get_startlist()
-    #        print('--------------')
-    #        for line in startlist._lines:
-    #            print(line)
-    ##if not found:
-    ##    print('No startlist found!')
-    ##    return
+            startlist.print()
 
 
 if __name__ == '__main__':

@@ -58,10 +58,13 @@ class Heat(Line):
 
 class Startlist(object):
     """Implement a track%field startlist."""
-    def __init__(self, table):
+    def __init__(self, table, name=None, time=None, location=None):
         """Initialise the object."""
         self._table = table
         self._colnames = []
+        self.name = name
+        self.time = time
+        self.location = location
         # raw header
         if (table and table.header and
                 table.header.rows and
@@ -76,6 +79,7 @@ class Startlist(object):
         else:
             raise ValueError('No valid Startlist!')
         # identify columns
+        self._header = []
         col_lane = -1
         col_name = -1
         col_order = -1
@@ -87,18 +91,25 @@ class Startlist(object):
             hdr = header_row[col].string.strip()
             if hdr == 'Startvolgorde':
                 col_order = col
+                self._header.append(hdr)
             elif hdr == 'Baan':
                 col_lane = col
+                self._header.append(hdr)
             elif hdr == 'Snr':
                 col_bib = col
+                self._header.append(hdr)
             elif hdr == 'Naam':
                 col_name = col
+                self._header.append(hdr)
             elif hdr == 'Vereniging':
                 col_club = col
+                self._header.append(hdr)
             elif hdr == 'Team':
                 col_team = col
+                self._header.append(hdr)
             elif hdr == 'Categorie':
                 col_cat = col
+                self._header.append(hdr)
         # raw detail rows
         self._rows = []
         if table.body:
@@ -140,3 +151,19 @@ class Startlist(object):
                 if col_lane > -1:
                     values['heat'] = row.cells[col_lane].string
                 self._lines.append(Heat(**values))
+
+    def print(self):
+        """Print the Startlist."""
+        print('--------------')
+        if self.time:
+            print(self.time)
+        if self.location:
+            print(self.location)
+        if self.name:
+            print(self.name)
+        else:
+            print('Time not found!')
+        print(', '.join(self._header))
+        print('--------------')
+        for line in self._lines:
+            print(line)
