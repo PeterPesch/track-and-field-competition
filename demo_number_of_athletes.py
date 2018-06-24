@@ -95,6 +95,8 @@ def main():
         startlist = item.startlist
         if startlist:
             startlist.print()
+    print('==========================')
+    schedule.print(size=True)
 
 
 if __name__ == '__main__':

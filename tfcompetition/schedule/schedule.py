@@ -15,6 +15,7 @@ class Item(object):
         self._type = type
         self._link = link
         self._startlist = None
+        self._reason_no_startlist = ''
 
     @property
     def event(self):
@@ -26,22 +27,27 @@ class Item(object):
         return '{}: {} - {} / {}'.format(
             self.time, self.event, self.category, self.startgroup)
 
-    def print(self):
+    def print(self, size=False):
         """Print the schedule item."""
-        print(str(self))
+        if not size:
+            print(str(self))
+        elif self.startlist:
+            print('{} ({})'.format(str(self), self.startlist.size))
+        else:
+            print('{} ({})'.format(str(self), self._reason_no_startlist))
 
     @property
     def startlist(self):
         """Return a startlist for this schedule item, insofar possible."""
         if not self._startlist:
             if 'startlijst' not in self._link:
-                print('No startlist available for {}.'.format(self))
+                self._reason_no_startlist = 'No startlist available'
                 return self._startlist
             parser = StartlistParser(self._link)
             try:
                 self._startlist = parser.get_startlist()
             except IndexError as e:
-                print('{} ({})'.format(e.args[0], self))
+                self._reason_no_startlist = str(e.args[0])
         return self._startlist
 
 
@@ -103,8 +109,8 @@ class Schedule(object):
                 link=row[3][1]
             ))
 
-    def print(self):
+    def print(self, size=False):
         """Print the Time Schedule."""
         print('Tijd: Onderdeel - Categorie/Startgroep')
         for item in self.items:
-            item.print()
+            item.print(size)
