@@ -4,12 +4,9 @@
 from tfcompetition.competition_selector import CompetitionSelector
 from tfcompetition.tfcompetition import TFCompetition
 from tfcompetition.schedule.schedule_parser import ScheduleParser
-from tfcompetition.startlist.startlist_parser import StartlistParser
 from tfcompetition.utils import eventsort_key, get_event, int_from_prompt, \
         is_jumping_event, is_relay_event, is_running_event, \
         is_throwing_event, schedulesort_key
-
-#from tfcompetition.startlist.startlist import Startlist
 
 
 def main():
@@ -28,14 +25,11 @@ def main():
     print('Schedule Name:', parser.name)
     print('Schedule Title:', parser.title)
     try:
-        table = parser.get_table()
+        schedule = parser.get_schedule()
     except IndexError as e:
         print(e.args[0])
         return
-    print('==========================')
-    schedule = parser.get_schedule()
     schedule.print()
-    # Show the types of event
     print('==========================')
     found_relay = False
     found_run = False
@@ -84,7 +78,7 @@ def main():
     # Create a sorted list of scheduled events of the chosen time
     scheduled_events = sorted(
         [item for item in schedule.items if check_eventtype(item.event)],
-        key = schedulesort_key)
+        key=schedulesort_key)
     # Let user choose an event
     while True:
         print('==========================')
@@ -97,22 +91,9 @@ def main():
             print('No event chosen. Bye!')
             break
         # Print the chosen event.
-        print('---------------------------')
         item = scheduled_events[choice]
-        item.print()
-        if 'startlijst' not in item._link:
-            print('No startlist available for this schedule item.')
-        # Print the startlist
-        print('Startlist page: {}'.format(item._link))
-        parser = StartlistParser(item._link)
-        print('Startlijst Name:', parser.name)
-        print('Startlijst Title:', parser.title)
-        try:
-            table = parser.get_table()
-        except IndexError as e:
-            print(e.args[0])
-        else:
-            startlist = parser.get_startlist()
+        startlist = item.startlist
+        if startlist:
             startlist.print()
 
 

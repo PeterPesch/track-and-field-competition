@@ -1,6 +1,9 @@
 """Objects which implement a track&field time schedule."""
 
 
+from ..startlist.startlist_parser import StartlistParser
+
+
 class Item(object):
     """Implement Items on a Time Schedule."""
     def __init__(self, time, event, category, startgroup, type, link):
@@ -11,6 +14,7 @@ class Item(object):
         self.startgroup = startgroup
         self._type = type
         self._link = link
+        self._startlist = None
 
     @property
     def event(self):
@@ -25,6 +29,20 @@ class Item(object):
     def print(self):
         """Print the schedule item."""
         print(str(self))
+
+    @property
+    def startlist(self):
+        """Return a startlist for this schedule item, insofar possible."""
+        if not self._startlist:
+            if 'startlijst' not in self._link:
+                print('No startlist available for {}.'.format(self))
+                return self._startlist
+            parser = StartlistParser(self._link)
+            try:
+                self._startlist = parser.get_startlist()
+            except IndexError as e:
+                print('{} ({})'.format(e.args[0], self))
+        return self._startlist
 
 
 class Schedule(object):

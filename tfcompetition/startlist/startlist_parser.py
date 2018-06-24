@@ -28,7 +28,7 @@ class StartlistParser(Parser):
     def get_startlist(self):
         """Return the startlist."""
         return Startlist(self.get_table(), name=self.name,
-                         time=self.time, location=self.location)
+                         time=self.time, location=self.location, url=self.url)
 
     @property
     def time(self):

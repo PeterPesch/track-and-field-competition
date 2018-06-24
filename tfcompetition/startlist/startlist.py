@@ -58,13 +58,14 @@ class Heat(Line):
 
 class Startlist(object):
     """Implement a track%field startlist."""
-    def __init__(self, table, name=None, time=None, location=None):
+    def __init__(self, table, name=None, time=None, location=None, url=None):
         """Initialise the object."""
         self._table = table
         self._colnames = []
         self.name = name
         self.time = time
         self.location = location
+        self._url = url
         self._athlete_count = None
         self._heat_count = None
         # raw header
@@ -163,8 +164,8 @@ class Startlist(object):
             print(self.location)
         if self.name:
             print(self.name)
-        else:
-            print('Time not found!')
+        if(self._url):
+            print('Page: {}'.format(self._url))
         print(', '.join(self._header))
         print('--------------')
         for line in self._lines:
