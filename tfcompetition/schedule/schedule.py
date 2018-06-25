@@ -109,8 +109,17 @@ class Schedule(object):
                 link=row[3][1]
             ))
 
-    def print(self, size=False):
-        """Print the Time Schedule."""
+    def print(self, size=False, filter=None):
+        """
+        Print the Time Schedule.
+
+        Arguments:
+        - size: If True, adds the number of heats or athletes.
+        = filter: optjonal function
+                  which takes an Item
+                  and returns True if item should be printed
+        """
         print('Tijd: Onderdeel - Categorie/Startgroep')
         for item in self.items:
-            item.print(size)
+            if (not filter) or (filter(item)):
+                item.print(size)
