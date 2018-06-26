@@ -17,7 +17,7 @@ The first workaround I want to (re)create is a small tool which quickly shows me
 
 The project uses Python 3.
 
-A list of External Packages used within this project is being maintained in folder "External_Packages_Used".
+A list of External Packages used within this project is being maintained in document "External_Packages_Used.md".
 
 
 ```shell
