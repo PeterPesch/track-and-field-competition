@@ -53,6 +53,15 @@ def combined_string_from_tag(tag):
         )
 
 
+def concatenated_string_from_tag(tag):
+    """Get a concatenated string representation from the tag."""
+    strings = list(tag.stripped_strings)
+    if len(strings) == 0:
+        return ''
+    else:
+        return ', '.join(strings)
+
+
 def combined_content_from_tag(tag):
     """Get the combined content from the tag."""
     result = ''

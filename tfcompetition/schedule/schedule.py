@@ -77,8 +77,10 @@ class Schedule(object):
                 if len(row.cells) < 4:
                     raise ValueError('No valid Time Schedule!')
                 self._rows.append(
-                    [(cel.string.strip(), cel.link,
-                      cel.combined_string.strip())
+                    [(cel.string.strip(),
+                      cel.link,
+                      cel.combined_string.strip(),
+                      cel.concatenated_string.strip())
                         for cel in row.cells])
         # Examine column 3: Results or Startlist.
         self._col3 = [row[3][0] for row in self._rows]
@@ -104,7 +106,8 @@ class Schedule(object):
                 time=row[0][0],
                 event=row[2][2],
                 category=startgroupdict[row[1][0]],
-                startgroup=row[1][0],
+                # startgroup=row[1][0],
+                startgroup=row[1][3],
                 type=self._colnames[3],
                 link=row[3][1]
             ))
