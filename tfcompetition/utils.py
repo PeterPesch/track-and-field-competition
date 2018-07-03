@@ -153,6 +153,8 @@ def is_throwing_event(event):
         return True
     if 'bal' in event:
         return True
+    if 'vortex' in event:
+        return True
     return False
 
 

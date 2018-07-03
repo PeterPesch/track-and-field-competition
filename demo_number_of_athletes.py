@@ -72,7 +72,7 @@ def main():
         print('Throw events chosen!')
         check_eventtype = is_throwing_event
     else:
-        print('No event type chosen.')
+        print('No event type chosen. Schedule for all event types:')
     if check_eventtype:
         # Create a sorted list of scheduled events of the chosen time
         scheduled_events = sorted(
@@ -87,7 +87,7 @@ def main():
                 print('({}) - {}'.format(i, str(item)))
             choice = int_from_prompt('Choose Event: ')
             if choice not in range(len(scheduled_events)):
-                print('No event chosen. Bye!')
+                print('No event chosen. Schedule for chosen Event Type:')
                 break
             # Print the chosen event.
             item = scheduled_events[choice]
